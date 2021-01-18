@@ -13,6 +13,14 @@ const mongoose = require("mongoose");
 //some bodyParser middleware
 app.use(bodyParser.json());
 
+
+//CORS stuff
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 //using imported module when we navigate to /api/recipe
 app.use('/api/recipe/', recipeEndpoints);
 app.use('/api/rating/', recipeEndpoints);
@@ -90,4 +98,5 @@ app.post('/rate', (req, resp) => {
 
 
 
-app.listen(3000); //tell app to listen on port 3000
+app.listen(3001); //tell app to listen on port 3001
+//React app is now using 3000

@@ -30,15 +30,15 @@ router.get('/',  async (req, res) => {
 `GET - /api/recipe/:name`
 */
 router.get('/:id', async (req, res) => {
-   const recipe_name = req.params.id;
+   const recipe_id = req.params.id;
    //ex: localhost:3000/api/recipe/croissant
 
-   const recipe = await recipeSchema.find({title: recipe_name});
+   const recipe = await recipeSchema.find({_id: recipe_id});
 
   //Error check
    if (recipe.length === 0){
       res.status(400);
-      res.send(`error: recipe for${recipe_name}  not found :O`);
+      res.send(`error: recipe for${recipe_id}  not found :O`);
    }else{
       res.status(200);
  //  res.send(`instructions for ${recipe_name} requested`);
@@ -54,9 +54,9 @@ router.post('/', async (req, res) => {
 
    //console.log(req.body);
 
-   if (rate < 0){
+   if (rate < 0 || rate > 5){
       res.status(400);
-      res.send("rating must not be negative");
+      res.send("invalid rating");
    
    }
 
@@ -68,7 +68,7 @@ router.post('/', async (req, res) => {
       res.status(400);
       res.send(`error: recipe for${dish}  not found :O`);
    }else{
-      const result = await recipeSchema.update(
+      const result = await recipeSchema.updateOne(
          {title: dish}, //find by
          {$push: {ratings: rate}}//what to change
       );
