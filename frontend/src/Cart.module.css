@@ -1,0 +1,12 @@
+.ingredients{
+   list-style: none;
+}
+
+.main{
+   width: 100%;
+   padding-right: 3em;
+}
+
+.title{
+   padding: 0.5em 0;
+}
